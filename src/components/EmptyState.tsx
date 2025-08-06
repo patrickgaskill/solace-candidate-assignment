@@ -33,7 +33,7 @@ export default function EmptyState({
         {description}{" "}
         <button
           onClick={onClearSearch}
-          className="text-blue-600 hover:text-blue-700"
+          className="text-solace-primary hover:text-solace-primary-dark"
         >
           clear your search
         </button>

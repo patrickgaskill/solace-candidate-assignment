@@ -8,7 +8,7 @@ export default function DegreeBadge({
   variant = "blue",
 }: DegreeBadgeProps) {
   const variantClasses = {
-    blue: "bg-blue-100 text-blue-800",
+    blue: "bg-solace-primary-100 text-solace-primary-800",
     green: "bg-green-100 text-green-800",
     purple: "bg-purple-100 text-purple-800",
     gray: "bg-gray-100 text-gray-800",

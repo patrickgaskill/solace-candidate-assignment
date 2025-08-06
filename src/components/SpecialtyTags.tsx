@@ -33,7 +33,7 @@ export default function SpecialtyTags({
         <div className="inline-block">
           <button
             onClick={() => setIsExpanded(true)}
-            className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+            className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-solace-primary-50 text-solace-primary hover:bg-solace-primary-100 hover:text-solace-primary-dark transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-solace-primary focus:ring-offset-1"
           >
             +{specialties.length - maxVisible} more
           </button>
@@ -43,7 +43,7 @@ export default function SpecialtyTags({
         <div className="inline-block">
           <button
             onClick={() => setIsExpanded(false)}
-            className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-600 hover:bg-blue-200 hover:text-blue-700 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+            className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-solace-primary-100 text-solace-primary hover:bg-solace-primary-200 hover:text-solace-primary-dark transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-solace-primary focus:ring-offset-1"
           >
             Show less
           </button>

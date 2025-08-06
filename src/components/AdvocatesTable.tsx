@@ -60,7 +60,7 @@ export default function AdvocatesTable({ advocates }: AdvocatesTableProps) {
             {advocates.map((advocate) => (
               <tr
                 key={advocate.id}
-                className="hover:bg-gray-50 transition-colors duration-150"
+                className="hover:bg-solace-primary-50 transition-colors duration-150"
               >
                 <td className="px-6 py-4 whitespace-nowrap">
                   <div className="flex items-center">

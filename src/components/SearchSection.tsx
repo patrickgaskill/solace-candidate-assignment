@@ -42,7 +42,7 @@ export default function SearchSection({
             id="search"
             type="text"
             placeholder={placeholder}
-            className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-blue-500 focus:border-blue-500 text-sm"
+            className="block w-full pl-10 pr-3 py-3 border border-gray-300 rounded-md leading-5 bg-white placeholder-gray-500 focus:outline-none focus:placeholder-gray-400 focus:ring-2 focus:ring-solace-primary focus:border-solace-primary text-sm"
             value={searchTerm}
             onChange={(e) => onSearchChange(e.target.value)}
           />
@@ -55,7 +55,7 @@ export default function SearchSection({
             </p>
             <button
               onClick={onClearSearch}
-              className="text-sm text-blue-600 hover:text-blue-700 font-medium focus:outline-none focus:underline"
+              className="text-sm text-solace-primary hover:text-solace-primary-dark font-medium focus:outline-none focus:underline"
             >
               Clear search
             </button>

@@ -17,9 +17,9 @@ export default function AdvocateAvatar({
 
   return (
     <div
-      className={`${sizeClasses[size]} rounded-full bg-blue-100 flex items-center justify-center flex-shrink-0`}
+      className={`${sizeClasses[size]} rounded-full bg-solace-primary-100 flex items-center justify-center flex-shrink-0`}
     >
-      <span className="font-medium text-blue-600">
+      <span className="font-medium text-solace-primary">
         {advocate.firstName[0]}
         {advocate.lastName[0]}
       </span>
