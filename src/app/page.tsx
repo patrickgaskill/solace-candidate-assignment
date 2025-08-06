@@ -69,10 +69,7 @@ export default function Home() {
   return (
     <main className="min-h-screen bg-gray-50">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
-        <PageHeader
-          title="Solace Advocates"
-          subtitle="Find experienced healthcare advocates who will help you navigate your healthcare journey"
-        />
+        <PageHeader />
 
         <SearchSection
           searchTerm={searchTerm}
