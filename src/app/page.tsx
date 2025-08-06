@@ -1,11 +1,8 @@
 "use client";
 
 import { Advocate } from "@/db/schema";
-import { useEffect, useState } from "react";
-
-type ApiResponse = {
-  data: Advocate[];
-};
+import { useAdvocates } from "@/hooks/useAdvocates";
+import { useState } from "react";
 
 function filterAdvocates(advocates: Advocate[], searchTerm: string) {
   const normalizedSearchTerm = searchTerm.toLowerCase().trim();
@@ -24,7 +21,7 @@ function filterAdvocates(advocates: Advocate[], searchTerm: string) {
   return advocates.filter((advocate) => {
     return fieldsToCheck.some((field) => {
       const value = advocate[field];
-      if (Array.isArray(value)) {
+      if (field === "specialties" && Array.isArray(value)) {
         return value.some((v) =>
           String(v).toLowerCase().includes(normalizedSearchTerm)
         );
@@ -35,35 +32,8 @@ function filterAdvocates(advocates: Advocate[], searchTerm: string) {
 }
 
 export default function Home() {
-  const [advocates, setAdvocates] = useState<Advocate[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
-
-  useEffect(() => {
-    const fetchAdvocates = async () => {
-      try {
-        console.log("fetching advocates...");
-        const response = await fetch("/api/advocates");
-
-        if (!response.ok) {
-          throw new Error(`HTTP error! status: ${response.status}`);
-        }
-
-        const jsonResponse: ApiResponse = await response.json();
-        setAdvocates(jsonResponse.data);
-      } catch (err) {
-        console.error("Error fetching advocates:", err);
-        setError(
-          err instanceof Error ? err.message : "Failed to fetch advocates"
-        );
-      } finally {
-        setLoading(false);
-      }
-    };
-
-    fetchAdvocates();
-  }, []);
+  const { data: advocates = [], isLoading, error, refetch } = useAdvocates();
 
   const handleSearchTermChange: React.ChangeEventHandler<HTMLInputElement> = (
     e
@@ -77,7 +47,7 @@ export default function Home() {
 
   const filteredAdvocates = filterAdvocates(advocates, searchTerm);
 
-  if (loading) {
+  if (isLoading) {
     return (
       <main style={{ margin: "24px" }}>
         <h1>Solace Advocates</h1>
@@ -99,9 +69,9 @@ export default function Home() {
           }}
         >
           <p>
-            <strong>Error:</strong> {error}
+            <strong>Error:</strong> {error.message}
           </p>
-          <button onClick={() => window.location.reload()}>Retry</button>
+          <button onClick={() => refetch()}>Retry</button>
         </div>
       </main>
     );
@@ -115,7 +85,7 @@ export default function Home() {
       <div>
         <p>Search</p>
         <p>
-          Searching for: <span id="search-term"></span>
+          Searching for: <span>{searchTerm}</span>
         </p>
         <input
           style={{ border: "1px solid black" }}
