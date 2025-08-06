@@ -37,14 +37,32 @@ function filterAdvocates(advocates: Advocate[], searchTerm: string) {
 export default function Home() {
   const [advocates, setAdvocates] = useState<Advocate[]>([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
-    console.log("fetching advocates...");
-    fetch("/api/advocates").then((response) => {
-      response.json().then((jsonResponse: ApiResponse) => {
+    const fetchAdvocates = async () => {
+      try {
+        console.log("fetching advocates...");
+        const response = await fetch("/api/advocates");
+
+        if (!response.ok) {
+          throw new Error(`HTTP error! status: ${response.status}`);
+        }
+
+        const jsonResponse: ApiResponse = await response.json();
         setAdvocates(jsonResponse.data);
-      });
-    });
+      } catch (err) {
+        console.error("Error fetching advocates:", err);
+        setError(
+          err instanceof Error ? err.message : "Failed to fetch advocates"
+        );
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchAdvocates();
   }, []);
 
   const handleSearchTermChange: React.ChangeEventHandler<HTMLInputElement> = (
@@ -58,6 +76,36 @@ export default function Home() {
   };
 
   const filteredAdvocates = filterAdvocates(advocates, searchTerm);
+
+  if (loading) {
+    return (
+      <main style={{ margin: "24px" }}>
+        <h1>Solace Advocates</h1>
+        <p>Loading advocates...</p>
+      </main>
+    );
+  }
+
+  if (error) {
+    return (
+      <main style={{ margin: "24px" }}>
+        <h1>Solace Advocates</h1>
+        <div
+          style={{
+            color: "red",
+            padding: "16px",
+            border: "1px solid red",
+            borderRadius: "4px",
+          }}
+        >
+          <p>
+            <strong>Error:</strong> {error}
+          </p>
+          <button onClick={() => window.location.reload()}>Retry</button>
+        </div>
+      </main>
+    );
+  }
 
   return (
     <main style={{ margin: "24px" }}>
@@ -99,9 +147,9 @@ export default function Home() {
                 <td>{advocate.city}</td>
                 <td>{advocate.degree}</td>
                 <td>
-                  {advocate.specialties.map((s, i) => (
-                    <div key={i}>{s}</div>
-                  ))}
+                  {Array.isArray(advocate.specialties)
+                    ? advocate.specialties.map((s, i) => <div key={i}>{s}</div>)
+                    : "No specialties listed"}
                 </td>
                 <td>{advocate.yearsOfExperience}</td>
                 <td>{advocate.phoneNumber}</td>
