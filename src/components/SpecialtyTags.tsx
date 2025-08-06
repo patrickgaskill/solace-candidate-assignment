@@ -1,3 +1,5 @@
+import { useState } from "react";
+
 interface SpecialtyTagsProps {
   specialties: string[] | unknown;
   maxVisible?: number;
@@ -7,24 +9,44 @@ export default function SpecialtyTags({
   specialties,
   maxVisible = 2,
 }: SpecialtyTagsProps) {
+  const [isExpanded, setIsExpanded] = useState(false);
+
   if (!Array.isArray(specialties) || specialties.length === 0) {
     return <span className="text-gray-500 italic">No specialties listed</span>;
   }
 
+  const displayedSpecialties = isExpanded
+    ? specialties
+    : specialties.slice(0, maxVisible);
+  const hasMore = specialties.length > maxVisible;
+
   return (
     <div className="space-y-1">
-      {specialties.slice(0, maxVisible).map((specialty, i) => (
+      {displayedSpecialties.map((specialty, i) => (
         <div key={i} className="inline-block mr-2 mb-1">
           <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-800">
             {specialty}
           </span>
         </div>
       ))}
-      {specialties.length > maxVisible && (
+      {hasMore && !isExpanded && (
         <div className="inline-block">
-          <span className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-500">
+          <button
+            onClick={() => setIsExpanded(true)}
+            className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-gray-100 text-gray-500 hover:bg-gray-200 hover:text-gray-700 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+          >
             +{specialties.length - maxVisible} more
-          </span>
+          </button>
+        </div>
+      )}
+      {isExpanded && hasMore && (
+        <div className="inline-block">
+          <button
+            onClick={() => setIsExpanded(false)}
+            className="inline-flex items-center px-2 py-1 rounded-md text-xs font-medium bg-blue-100 text-blue-600 hover:bg-blue-200 hover:text-blue-700 transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-1"
+          >
+            Show less
+          </button>
         </div>
       )}
     </div>
