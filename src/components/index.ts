@@ -7,4 +7,5 @@ export { default as LoadingState } from "./LoadingState";
 export { default as PageHeader } from "./PageHeader";
 export { default as ResultsCount } from "./ResultsCount";
 export { default as SearchSection } from "./SearchSection";
+export { default as SolaceLogo } from "./SolaceLogo";
 export { default as SpecialtyTags } from "./SpecialtyTags";
